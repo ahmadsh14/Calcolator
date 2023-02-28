@@ -4,7 +4,6 @@ import classes from "./Calculator.module.css";
 import { evaluate } from "mathjs";
 import History from "./History";
 
-
 const Calculator = () => {
   const [numValue, setNumValue] = useState("");
   const [FirstNum, setFirstNum] = useState("");
@@ -23,17 +22,16 @@ const Calculator = () => {
     }
   };
   const clear = () => {
-    setNumValue('');
-    setResult('');
+    setNumValue("");
     setOperation("");
+    setFirstNum("");
+    setResult("")
+    setHistory([]);
   };
   const operator = (value) => {
-    if (numValue !== '') {
-      calculate()
-    }
     setOperation(value);
     setFirstNum((prevFirstNum) => {
-      if (prevFirstNum === '') {
+      if (prevFirstNum === "") {
         return numValue;
       } else {
         return evaluate(`${prevFirstNum}${operation}${numValue}`);
@@ -42,10 +40,19 @@ const Calculator = () => {
     setNumValue("");
   };
   const calculate = () => {
+    try{
     const result = evaluate(`${FirstNum}${operation}${numValue}`);
     setResult(result);
-    setHistory([...history, { result, operation: `${FirstNum} ${operation} ${numValue}` }]);
-    clear();
+    setHistory([
+      ...history,
+      { result, operation: `${FirstNum} ${operation} ${numValue}` },
+    ]);
+    setNumValue("");
+    setOperation("");
+    setFirstNum("");
+  }catch(err){
+      console.log('enter num')
+  }
   };
   const handleHistoryClick = (index) => {
     setHistory(history.slice(0, index + 1));

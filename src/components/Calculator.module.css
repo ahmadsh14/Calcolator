@@ -18,6 +18,7 @@ button {
   align-items: center;
   text-align: center;
   justify-content: space-evenly;
+  width: 100%;
 }
 .calculaterBox {
   background: #f5f5f5;
